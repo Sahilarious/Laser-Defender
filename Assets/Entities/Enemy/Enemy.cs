@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (firstUpdate == true) {
+        if (firstUpdate) {
             time = Time.time;
             firstUpdate = false;
         }
@@ -70,11 +70,6 @@ public class Enemy : MonoBehaviour {
 
     void shootLaser() {
         GameObject enemyLaser = Instantiate(laser, gameObject.transform.position - new Vector3(0f, 0.5f, 0f), Quaternion.identity) as GameObject;
-    }
-
-    public void resetTime()
-    {
-        time = Time.time;
     }
 
 }
