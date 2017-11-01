@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyLaser : MonoBehaviour {
     public float laserSpeed = 1f;
+    public float damage;
 
     private float lowerBound;
 
@@ -20,4 +21,9 @@ public class EnemyLaser : MonoBehaviour {
             Destroy(gameObject);
         }
 	}
+
+    public float getDamage()
+    {
+        return damage;
+    }
 }

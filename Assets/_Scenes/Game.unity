@@ -693,17 +693,22 @@ Prefab:
     - target: {fileID: 20311201969249250, guid: a24bb96e09b03c544b8461210e8c713f,
         type: 2}
       propertyPath: m_BackGroundColor.r
-      value: 0
+      value: 0.36862746
       objectReference: {fileID: 0}
     - target: {fileID: 20311201969249250, guid: a24bb96e09b03c544b8461210e8c713f,
         type: 2}
       propertyPath: m_BackGroundColor.g
-      value: 0
+      value: 0.24705882
       objectReference: {fileID: 0}
     - target: {fileID: 20311201969249250, guid: a24bb96e09b03c544b8461210e8c713f,
         type: 2}
       propertyPath: m_BackGroundColor.b
-      value: 0
+      value: 0.41960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 20311201969249250, guid: a24bb96e09b03c544b8461210e8c713f,
+        type: 2}
+      propertyPath: m_BackGroundColor.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a24bb96e09b03c544b8461210e8c713f, type: 2}
@@ -809,17 +814,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 60045730877592898, guid: af74d89cff1e3194080270cfe869ad6e,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114166967056694202, guid: af74d89cff1e3194080270cfe869ad6e,
-        type: 2}
-      propertyPath: particles
-      value: 
-      objectReference: {fileID: 1140051380814258, guid: 40ecd1a3ec388614c9b66338dee5e0ba,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af74d89cff1e3194080270cfe869ad6e, type: 2}
   m_IsPrefabParent: 0

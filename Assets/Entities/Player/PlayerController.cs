@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject laser;
     public GameObject particles;
     public float firingRate = 0.3f;
+    public float health;
 
     public static Vector3 playerPosition;
     public int initialLives = 2;
@@ -41,13 +42,13 @@ public class PlayerController : MonoBehaviour {
         changePlayerPosition();
 
         shipSprite();
-
-
         
         shootLaser();
 
         playerPosition = transform.position;
     }
+
+    // update ship velocity
 
     void playerVelocityChange() {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -58,6 +59,19 @@ public class PlayerController : MonoBehaviour {
         {
             playerVelocity += new Vector3(velocityModifier, 0f, 0f);
         }
+    }
+
+    // update ship position
+    void changePlayerPosition()
+    {
+        float xPos = Mathf.Clamp(gameObject.GetComponent<Transform>().position.x + playerVelocity.x, xMin, xMax);
+
+        if (xPos <= xMin || xPos >= xMax)
+        {
+            playerVelocity = new Vector3(0f, 0f, 0f);
+        }
+
+        gameObject.GetComponent<Transform>().position = new Vector3(xPos, gameObject.GetComponent<Transform>().position.y, 0f);
     }
 
     void shipSprite()
@@ -86,18 +100,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void changePlayerPosition() {
-        float xPos = Mathf.Clamp(gameObject.GetComponent<Transform>().position.x + playerVelocity.x, xMin, xMax);
-
-        if (xPos <= xMin || xPos >= xMax)
-        {
-            playerVelocity = new Vector3(0f, 0f, 0f);
-        }
-
-        gameObject.GetComponent<Transform>().position = new Vector3(xPos, gameObject.GetComponent<Transform>().position.y, 0f);
-        
-    }
-
     void shootLaser() {
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -116,20 +118,17 @@ public class PlayerController : MonoBehaviour {
 
      void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(currentLives);
         if (collision.gameObject.CompareTag("EnemyLaser"))
         {
-            currentLives -= 1;
-            if (currentLives == 0) {
+            health -= collision.gameObject.GetComponent<EnemyLaser>().getDamage(); 
+            if (health <= 0) {
                 GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
                 Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
                 Destroy(gameObject);
-
             }
 
             // destroys the enemy laser object
             Destroy(collision.gameObject);
-
         }
     }
 }

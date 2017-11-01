@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerLaser : MonoBehaviour {
     public float laserSpeed = 1f;
+    public float damage = 100f;
 
    
 
@@ -23,8 +24,10 @@ public class PlayerLaser : MonoBehaviour {
         if (transform.position.y >= upperBound) {
             Destroy(gameObject);
         }
+    }
 
-
+    public float getDamage() {
+        return damage;
     }
 
 }

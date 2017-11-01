@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 212295386756023666}
   - component: {fileID: 114166967056694202}
   - component: {fileID: 60045730877592898}
-  m_Layer: 0
+  - component: {fileID: 50454468298997030}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,6 +43,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50454468298997030
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843515132229478}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!60 &60045730877592898
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -103,8 +124,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 762992a8e310b044ca3192f2650542f7, type: 3}
   - {fileID: 21300000, guid: bf5f50bd3c8e9144f8699f8ed9c80897, type: 3}
   laser: {fileID: 1631157264527630, guid: f36777f77730c8042a14150a599c2dda, type: 2}
-  particles: {fileID: 0}
+  particles: {fileID: 1140051380814258, guid: 40ecd1a3ec388614c9b66338dee5e0ba, type: 2}
   firingRate: 0.3
+  health: 500
   initialLives: 2
 --- !u!212 &212295386756023666
 SpriteRenderer:
