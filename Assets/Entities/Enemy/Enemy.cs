@@ -10,22 +10,22 @@ public class Enemy : MonoBehaviour {
     public float fireRatePerSeconds = 0.5f;
 
     private float alpha = 0;
-    private float time = 0;
+    //private float time = 0;
     private bool firstUpdate;
 
 	// Use this for initialization
 	void Start () {       
-        enemyAlpha(0f);
-        firstUpdate = true;
+        //enemyAlpha(0f);
+        //firstUpdate = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (firstUpdate) {
-            time = Time.time;
-            firstUpdate = false;
-        }
-        enemyAlphaLerp();
+        //if (firstUpdate) {
+        //    time = Time.time;
+        //    firstUpdate = false;
+        //}
+        //enemyAlphaLerp();
 
         float probability =  fireRatePerSeconds * Time.deltaTime;
 
@@ -34,19 +34,19 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void enemyAlphaLerp() {
-        //float lerp = Mathf.PingPong(Time.time, duration)/duration;
+    //void enemyAlphaLerp() {
+    //    //float lerp = Mathf.PingPong(Time.time, duration)/duration;
 
-        alpha = Mathf.Lerp(0.0f, 1.0f, (Time.time - time)/duration);
+    //    alpha = Mathf.Lerp(0.0f, 1.0f, (Time.time - time)/duration);
 
-        enemyAlpha(alpha);
-    }
+    //    enemyAlpha(alpha);
+    //}
 
-    void enemyAlpha(float alpha) {
-        Color enemyColor = gameObject.GetComponent<SpriteRenderer>().material.color;
-        enemyColor.a = alpha;
-        gameObject.GetComponent<SpriteRenderer>().material.color = enemyColor;
-    }
+    //void enemyAlpha(float alpha) {
+    //    Color enemyColor = gameObject.GetComponent<SpriteRenderer>().material.color;
+    //    enemyColor.a = alpha;
+    //    gameObject.GetComponent<SpriteRenderer>().material.color = enemyColor;
+    //}
 
     void OnTriggerEnter2D(Collider2D collision)
     {
