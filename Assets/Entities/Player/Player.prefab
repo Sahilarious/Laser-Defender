@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2057ebb03308241a727b2747364584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityModifier: 1
+  velocityModifier: 10
   playerSprites:
   - {fileID: 21300000, guid: 091534bb64a96284d88b966bc2fba4db, type: 3}
   - {fileID: 21300000, guid: 7fde23d586e110d46bebbf98aa8c6f8e, type: 3}
@@ -127,6 +127,10 @@ MonoBehaviour:
   particles: {fileID: 1140051380814258, guid: 40ecd1a3ec388614c9b66338dee5e0ba, type: 2}
   firingRate: 0.3
   health: 500
+  rightThruster: {fileID: 1892051468124634, guid: e71606eecf8fbea4590fb6f652fe23c6,
+    type: 2}
+  leftThruster: {fileID: 1297476391198350, guid: 83ed700eb8066bf41990ab92323a6bec,
+    type: 2}
   initialLives: 2
 --- !u!212 &212295386756023666
 SpriteRenderer:

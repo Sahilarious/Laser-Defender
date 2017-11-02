@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
+    public AudioClip zap;
     public GameObject laser;
     public GameObject particles;
     public float duration;
     public float health = 200f;
     public float fireRatePerSeconds = 0.5f;
+    public int scoreValue;
 
+
+    private Score score;
     private float alpha = 0;
     //private float time = 0;
     private bool firstUpdate;
 
 	// Use this for initialization
-	void Start () {       
+	void Start () {
         //enemyAlpha(0f);
         //firstUpdate = true;
+
+        score = FindObjectOfType<Score>();
     }
 	
 	// Update is called once per frame
@@ -52,6 +59,8 @@ public class Enemy : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("PlayerLaser"))
         {
+      
+            AudioSource.PlayClipAtPoint(zap, transform.position);
             // obtains the damage value from the projectile and subtracts it from the enemy's health
             health -= collision.gameObject.GetComponent<PlayerLaser>().getDamage();
 
@@ -59,11 +68,13 @@ public class Enemy : MonoBehaviour {
             Destroy(collision.gameObject);
 
             // destroys the enemy object if its health has gone to 0 or below
+            // also creates an explosion effect
             if(health <= 0)
             {
                 Destroy(gameObject);
                 GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
                 Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
+                score.changeScore(scoreValue); ;
             }
         }
     }

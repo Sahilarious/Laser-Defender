@@ -105,11 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7110b56401cf73b4781dabb46a3c8031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zap: {fileID: 8300000, guid: b3e828d5d6c19dc4b9700525a2ac9efd, type: 3}
   laser: {fileID: 1333633312193904, guid: b799fa751516f814b8a7066a117fce65, type: 2}
   particles: {fileID: 1140051380814258, guid: 40ecd1a3ec388614c9b66338dee5e0ba, type: 2}
   duration: 2
   health: 200
   fireRatePerSeconds: 0.5
+  scoreValue: 1
 --- !u!212 &212572367526682464
 SpriteRenderer:
   m_ObjectHideFlags: 1
