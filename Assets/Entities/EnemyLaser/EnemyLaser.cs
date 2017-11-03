@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyLaser : MonoBehaviour {
     public float laserSpeed = 1f;
-    public float damage;
+    public int damage;
    // public AudioClip laser;
 
     private float lowerBound;
@@ -24,7 +24,7 @@ public class EnemyLaser : MonoBehaviour {
         }
 	}
 
-    public float getDamage()
+    public int getDamage()
     {
         return damage;
     }

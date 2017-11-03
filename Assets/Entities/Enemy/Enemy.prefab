@@ -105,7 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7110b56401cf73b4781dabb46a3c8031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zap: {fileID: 8300000, guid: b3e828d5d6c19dc4b9700525a2ac9efd, type: 3}
+  zap: {fileID: 8300000, guid: baede00894e215446b43c0513d02ab6b, type: 3}
+  destroyed: {fileID: 8300000, guid: b3e828d5d6c19dc4b9700525a2ac9efd, type: 3}
   laser: {fileID: 1333633312193904, guid: b799fa751516f814b8a7066a117fce65, type: 2}
   particles: {fileID: 1140051380814258, guid: 40ecd1a3ec388614c9b66338dee5e0ba, type: 2}
   duration: 2
@@ -141,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1178289539
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a8e60c0f9d43ca4aaf152045ca7c5ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

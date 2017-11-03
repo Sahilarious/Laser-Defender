@@ -38,6 +38,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e782a03e258248741804e8e60d5ddd42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerShip: {fileID: 0}
+  life: {fileID: 1856669225356400, guid: b066f8e2dca8c7f4b9059a5c4a207656, type: 2}
+  xPos: 15.5
+  yPos: 11.5
 --- !u!224 &224458598625963492
 RectTransform:
   m_ObjectHideFlags: 1

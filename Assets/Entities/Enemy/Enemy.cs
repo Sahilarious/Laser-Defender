@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
     public AudioClip zap;
+    public AudioClip destroyed;
     public GameObject laser;
     public GameObject particles;
     public float duration;
     public float health = 200f;
     public float fireRatePerSeconds = 0.5f;
     public int scoreValue;
-
 
     private Score score;
     private float alpha = 0;
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour {
         //firstUpdate = true;
 
         score = FindObjectOfType<Score>();
+        
     }
 	
 	// Update is called once per frame
@@ -33,11 +34,12 @@ public class Enemy : MonoBehaviour {
         //    firstUpdate = false;
         //}
         //enemyAlphaLerp();
-
-        float probability =  fireRatePerSeconds * Time.deltaTime;
-
-        if (probability > Random.value) {
-            shootLaser();
+        if (FindObjectOfType<PlayerLife>()) {
+            float probability = fireRatePerSeconds * Time.deltaTime;
+            if (probability > Random.value)
+            {
+                shootLaser();
+            }
         }
     }
 
@@ -60,7 +62,8 @@ public class Enemy : MonoBehaviour {
         if (collision.gameObject.CompareTag("PlayerLaser"))
         {
       
-            AudioSource.PlayClipAtPoint(zap, transform.position);
+            AudioSource.PlayClipAtPoint(zap, Camera.main.transform.position, 0.8f);
+            
             // obtains the damage value from the projectile and subtracts it from the enemy's health
             health -= collision.gameObject.GetComponent<PlayerLaser>().getDamage();
 
@@ -71,10 +74,11 @@ public class Enemy : MonoBehaviour {
             // also creates an explosion effect
             if(health <= 0)
             {
-                Destroy(gameObject);
+                AudioSource.PlayClipAtPoint(destroyed, Camera.main.transform.position);
+                Destroy(gameObject, destroyed.length/2);
                 GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
                 Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
-                score.changeScore(scoreValue); ;
+                score.changeScore(scoreValue); 
             }
         }
     }

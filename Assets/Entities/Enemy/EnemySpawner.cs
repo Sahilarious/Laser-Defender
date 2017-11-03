@@ -45,8 +45,6 @@ public class EnemySpawner : MonoBehaviour {
             Debug.Log("Empty Formation");
             //SpawnEnemies();
             SpawnUntilFull();
-
-
         }
     }
 

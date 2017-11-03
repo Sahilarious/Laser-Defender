@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    public AudioClip zap;
+    public AudioClip destroyed;
     public float velocityModifier;
     public Sprite[] playerSprites;
     public GameObject laser;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 playerVelocity;    
     private float xMax;
     private float xMin;
+    private int damagePerLife = 100;
 
     // Use this for initialization
     void Start () {
@@ -159,15 +162,25 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("EnemyLaser"))
         {
+            AudioSource.PlayClipAtPoint(zap, Camera.main.transform.position);
+            int damage = collision.gameObject.GetComponent<EnemyLaser>().getDamage();
+            livesLost(damage/damagePerLife);
             health -= collision.gameObject.GetComponent<EnemyLaser>().getDamage(); 
             if (health <= 0) {
+                AudioSource.PlayClipAtPoint(destroyed, Camera.main.transform.position);
                 GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
                 Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
-                Destroy(gameObject);
+                Destroy(gameObject, destroyed.length/2);
             }
 
             // destroys the enemy laser object
             Destroy(collision.gameObject);
+        }
+    }
+
+    void livesLost(float lives) {
+        for (int i = 0; i < lives; i++) {
+            Destroy(FindObjectOfType<PlayerLife>().gameObject);
         }
     }
 }
