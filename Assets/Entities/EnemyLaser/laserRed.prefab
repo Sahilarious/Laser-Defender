@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserSpeed: 10
-  damage: 100
+  damage: 1
 --- !u!212 &212483373419751410
 SpriteRenderer:
   m_ObjectHideFlags: 1

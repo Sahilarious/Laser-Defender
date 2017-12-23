@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour {
+public class EnemySpawner : MonoBehaviour
+{
     public GameObject enemyShipPrefab;
     public float width = 10f;
     public float height = 5f;
@@ -16,10 +17,8 @@ public class EnemySpawner : MonoBehaviour {
     private float xMin;
 
 	// Use this for initialization
-	void Start () {
-
-        //SpawnEnemies();
-
+	void Start ()
+    {
         SpawnUntilFull();
 
         float distance = transform.position.z - Camera.main.transform.position.z;
@@ -37,25 +36,24 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
         changePosition();
 
         if (AllMembersAreDead())
         {
-            Debug.Log("Empty Formation");
-            //SpawnEnemies();
             SpawnUntilFull();
         }
     }
 
-    void changePosition() {
-        //float lerp = Mathf.PingPong(Time.time, oscDuration) / oscDuration;
-        //float xPos = Mathf.Lerp(xMin, xMax, lerp);
+    void changePosition()
+    {
         if (movingRight)
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
         }
-        else {
+        else
+        {
             transform.position += Vector3.left * speed * Time.deltaTime;
         }
 
@@ -69,7 +67,8 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    Transform NextFreePosition() {
+    Transform NextFreePosition()
+    {
 
         foreach (Transform childTransform in transform) {
             if (childTransform.childCount == 0)
@@ -81,14 +80,12 @@ public class EnemySpawner : MonoBehaviour {
         return null;
     }
 
-    bool AllMembersAreDead() {
+    bool AllMembersAreDead()
+    {
 
         // The hierarchy is structured through an object's transform
         foreach(Transform childTransform in transform)
         {
-            // childCount indicates how many gameObjects the transform is a parent to 
-            // if >0 -- an enemy is still alive
-            // if =0 -- all enemies in that position are dead
             if (childTransform.childCount > 0)
             {
                 return false;
@@ -110,7 +107,8 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    void SpawnUntilFull() {
+    void SpawnUntilFull()
+    {
         Transform positionTransform = NextFreePosition();
 
         if (positionTransform != null)
@@ -121,7 +119,6 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         if (NextFreePosition()) {
-            Debug.Log("Position is open!");
             Invoke("SpawnUntilFull", spawnDelay);
         }
     }

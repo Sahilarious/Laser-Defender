@@ -24,7 +24,7 @@ public class EnemyLaser : MonoBehaviour {
         }
 	}
 
-    public int getDamage()
+    public int GetDamage()
     {
         return damage;
     }

@@ -173,9 +173,56 @@ Prefab:
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1082188727282988, guid: a987e585a3502494f9f93a0bdb6c3398, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a987e585a3502494f9f93a0bdb6c3398, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &119565316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 119565318}
+  - component: {fileID: 119565317}
+  m_Layer: 0
+  m_Name: RandomPowerUpGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &119565317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 119565316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b2961c9ae6c5404585368ebbe42208b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  probability: 1
+  shieldPowerUp: {fileID: 1555890511953276, guid: 242fdb5a89c1ef34eabfed02e6b1756d,
+    type: 2}
+--- !u!4 &119565318
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 119565316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &121932845
 Prefab:
   m_ObjectHideFlags: 0
@@ -330,12 +377,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -507,7 +554,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1759639174
+  randomSeed: -2132117473
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3613,6 +3660,51 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a1c2070b6bd76224090ac1aed2b6502d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &612198358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 612198360}
+  - component: {fileID: 612198359}
+  m_Layer: 0
+  m_Name: PlayerPowerUpManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &612198359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 612198358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efcca782c407d74083ccb75ef4e0db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  shieldsPowerUp:
+  - {fileID: 1555890511953276, guid: 242fdb5a89c1ef34eabfed02e6b1756d, type: 2}
+  shields:
+  - {fileID: 1554620807050808, guid: 52cb2d27c85a7d5489446781a6f778d7, type: 2}
+--- !u!4 &612198360
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 612198358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.511862, y: 5.055952, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &668408211
 Prefab:
   m_ObjectHideFlags: 0
@@ -3846,7 +3938,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 726485285
+  randomSeed: 1792142708
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6807,8 +6899,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -13.4}
-  m_SizeDelta: {x: 639, y: -204.1}
+  m_AnchoredPosition: {x: 0.00036049, y: -14}
+  m_SizeDelta: {x: 755.5, y: -268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &989750100
 MonoBehaviour:
@@ -7194,7 +7286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: 280}
+  m_AnchoredPosition: {x: -151, y: 280}
   m_SizeDelta: {x: 424, y: 23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1847383978
@@ -7360,14 +7452,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1843515132229478, guid: af74d89cff1e3194080270cfe869ad6e, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 114166967056694202, guid: af74d89cff1e3194080270cfe869ad6e,
         type: 2}
-      propertyPath: zap
+      propertyPath: zapAudio
       value: 
       objectReference: {fileID: 8300000, guid: baede00894e215446b43c0513d02ab6b, type: 3}
     - target: {fileID: 114166967056694202, guid: af74d89cff1e3194080270cfe869ad6e,
         type: 2}
-      propertyPath: destroyed
+      propertyPath: destroyedAudio
       value: 
       objectReference: {fileID: 8300000, guid: b3e828d5d6c19dc4b9700525a2ac9efd, type: 3}
     m_RemovedComponents: []
@@ -7418,12 +7514,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

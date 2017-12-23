@@ -15,7 +15,7 @@ public class PlayerLives : MonoBehaviour {
         if (SceneManager.GetActiveScene().name == "Game")
         {
             loseScreen.GetComponent<Canvas>().enabled = false;
-            for (int i = 0; i < playerShip.GetComponent<PlayerController>().health / 100; i++)
+            for (int i = 0; i < playerShip.GetComponent<PlayerController>().GetInitialLives(); i++)
             {
                 Instantiate(life, new Vector3(xPos - i, yPos, 0), Quaternion.identity);
             }

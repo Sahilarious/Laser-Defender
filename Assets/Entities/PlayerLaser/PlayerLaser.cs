@@ -26,7 +26,7 @@ public class PlayerLaser : MonoBehaviour {
         }
     }
 
-    public float getDamage() {
+    public float GetDamage() {
         return damage;
     }
 

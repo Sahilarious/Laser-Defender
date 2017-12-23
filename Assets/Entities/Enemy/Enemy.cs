@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour {
             AudioSource.PlayClipAtPoint(zap, Camera.main.transform.position, 0.8f);
             
             // obtains the damage value from the projectile and subtracts it from the enemy's health
-            health -= collision.gameObject.GetComponent<PlayerLaser>().getDamage();
+            health -= collision.gameObject.GetComponent<PlayerLaser>().GetDamage();
 
             // destroys the playerLaser
             Destroy(collision.gameObject);

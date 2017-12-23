@@ -3,107 +3,89 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-    public AudioClip zap;
-    public AudioClip destroyed;
+public class PlayerController : MonoBehaviour
+{
+    public AudioClip zapAudio;
+    public AudioClip destroyedAudio;
     public float velocityModifier;
     public Sprite[] playerSprites;
     public GameObject laser;
     public GameObject particles;
     public float firingRate = 0.3f;
-    public float health;
     public GameObject rightThruster;
     public GameObject leftThruster;
 
-    //public static Vector3 playerPosition;
     public int initialLives = 2;
     public static int currentLives;
 
     private GameObject rThrust;
     private GameObject lThrust;
-    private Vector3 playerVelocity;    
+    private Vector3 playerVelocity = Vector3.zero;    
     private float xMax;
     private float xMin;
-    private int damagePerLife = 100;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         currentLives = initialLives;
 
-        playerVelocity = new Vector3(0f,0f,0f);
-        velocityModifier = velocityModifier * Time.deltaTime;
+        SetShipMovementMinMax();
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        UpdatePlayerVelocity();
+
+        SetPositionLimit();
+
+        UpdateShipSprite();
+
+        UpdateThrusters();
+
+        ShootLaser();
+
+
+        if (!FindObjectOfType<ShieldBase>())
+        {
+            // changes the ship's layer back to Friendlies so that enemy lasers will interact with 
+            // the player ship's collider
+            gameObject.layer = 8;
+        }
+
+        if(!gameObject.GetComponent<Renderer>().enabled)
+        {
+            DestroyThrusters();
+        }
+
+    }
+
+    void SetShipMovementMinMax()
+    {
         float shipBound = gameObject.GetComponent<SpriteRenderer>().sprite.bounds.max.x;
 
-        float distance = transform.position.z - Camera.main.transform.position.z; 
-        Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
-        Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1,0, distance));
+        float distance = transform.position.z - Camera.main.transform.position.z;
+        Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
+        Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance));
 
         xMax = rightMost.x - shipBound;
         xMin = leftMost.x + shipBound;
     }
 
-    // Update is called once per frame
-    void Update () {
-        playerVelocityChange();
 
-        positionLimit();
-
-        shipSprite();
-        
-        shootLaser();
-
-        thrusters();
-    }
-
-    // update ship velocity
-
-    void playerVelocityChange() {
-        // LEFT KEY pressed -> velocity increases along NEGATIVE x-axis
-        // RIGHT KEY pressed -> velocity increases along the POSITIVE x-axis 
+    void UpdatePlayerVelocity()
+    {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(-velocityModifier, 0f);
-            //playerVelocity += new Vector3(-velocityModifier, 0f, 0f);
+            gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(-velocityModifier * Time.deltaTime, 0f);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(velocityModifier, 0f);
-            //playerVelocity += new Vector3(velocityModifier, 0f, 0f);
+            gameObject.GetComponent<Rigidbody2D>().velocity += new Vector2(velocityModifier * Time.deltaTime, 0f);
         }
     }
 
-    void thrusters()
-    {
-        // LEFT KEY gets pressed down ->  the right thruster turns on, applying a force on the ship from the right, hence pushing the ship to the left
-        // RIGHT KEY gets pressed down -> the left thruster turns on, applying a force on the ship from the left, hence pushing the ship to the right
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (!rThrust) {
-                rThrust = Instantiate(rightThruster, gameObject.transform.position + new Vector3(0.2f, -0.26f, 10f), Quaternion.Euler(95, -90, -90)) as GameObject;
-                rThrust.transform.parent = gameObject.transform;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (!lThrust)
-            {
-                lThrust = Instantiate(leftThruster, gameObject.transform.position + new Vector3(-0.3f, -0.26f, 10f), Quaternion.Euler(83.324f, -90f, -90f)) as GameObject;
-                lThrust.transform.parent = gameObject.transform;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            Destroy(rThrust);
-
-        }
-        else if (Input.GetKeyUp(KeyCode.RightArrow)) {
-            Destroy(lThrust);
-        }
-    }
-
-    // update ship position
-    void positionLimit()
+    void SetPositionLimit()
     {
         float xPos = Mathf.Clamp(gameObject.GetComponent<Transform>().position.x, xMin, xMax);
 
@@ -117,70 +99,153 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void shipSprite()
+    void UpdateShipSprite()
     {
+        Sprite updatedSprite;
+
         if (playerVelocity.x < 0)
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = playerSprites[playerSprites.Length - 1];
+            updatedSprite = playerSprites[playerSprites.Length - 1];
         }
         else if (playerVelocity.x > 0)
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = playerSprites[playerSprites.Length - 2];
+            updatedSprite = playerSprites[playerSprites.Length - 2];
         }
         else
         {
-            shipSpriteDamage();
+            updatedSprite = playerSprites[0];
         }
+        gameObject.GetComponent<SpriteRenderer>().sprite = updatedSprite;
     }
 
-    void shipSpriteDamage() {
-        if (currentLives == initialLives)
+    void UpdateThrusters()
+    {
+        // LEFT KEY gets pressed down ->  the right thruster turns on, applying a force on the ship from the right, hence pushing the ship to the left
+        // RIGHT KEY gets pressed down -> the left thruster turns on, applying a force on the ship from the left, hence pushing the ship to the right
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !rThrust)
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = playerSprites[0];
+            InstantiateRightThruster();
         }
-        else {
-            gameObject.GetComponent<SpriteRenderer>().sprite = playerSprites[1];
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && !lThrust)
+        {
+            InstantiateLeftThruster();
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) && rThrust)
+        {
+            Destroy(rThrust);
+
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow) && lThrust)
+        {
+            Destroy(lThrust);
         }
     }
 
-    void shootLaser() {
+    void InstantiateLeftThruster()
+    {
+        lThrust = Instantiate(leftThruster, gameObject.transform.position + new Vector3(-0.3f, -0.26f, 10f), Quaternion.Euler(83.324f, -90f, -90f)) as GameObject;
+        lThrust.transform.parent = gameObject.transform;
+    }
 
+    void InstantiateRightThruster()
+    {
+        rThrust = Instantiate(rightThruster, gameObject.transform.position + new Vector3(0.2f, -0.26f, 10f), Quaternion.Euler(95, -90, -90)) as GameObject;
+        rThrust.transform.parent = gameObject.transform;
+    }
+
+    void ShootLaser()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            InvokeRepeating("firing", 0.0000001f, firingRate);
+            InvokeRepeating("Firing", 0.0000001f, firingRate);
         }
         else if (Input.GetKeyUp(KeyCode.Space)) {
-            CancelInvoke("firing");
+            CancelInvoke("Firing");
         }
     }
 
-    void firing() {
+    void Firing()
+    {
         GameObject playerLaser = Instantiate(laser, gameObject.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity) as GameObject;
     }
 
-     void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("EnemyLaser"))
-        {
-            AudioSource.PlayClipAtPoint(zap, Camera.main.transform.position);
-            int damage = collision.gameObject.GetComponent<EnemyLaser>().getDamage();
-            livesLost(damage/damagePerLife);
-            health -= collision.gameObject.GetComponent<EnemyLaser>().getDamage(); 
-            if (health <= 0) {
-                AudioSource.PlayClipAtPoint(destroyed, Camera.main.transform.position);
-                GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
-                Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
-                Destroy(gameObject, destroyed.length/2);
-            }
+        Component[] shieldComponents = collider.gameObject.GetComponents(typeof(ShieldPowerUpBase));
 
-            // destroys the enemy laser object
-            Destroy(collision.gameObject);
+        if (collider.gameObject.CompareTag("EnemyLaser"))
+        {
+            PlayZapAudio();
+            LoseLives(collider.GetComponent<EnemyLaser>().GetDamage());
+            
+            if (gameObject && currentLives <= 0) {
+                PlayDestroyedAudio();
+                CreateExplosion();
+                gameObject.GetComponent<Renderer>().enabled = false;
+                Destroy(gameObject, destroyedAudio.length / 2);
+            }
+            Destroy(collider.gameObject);
+        } else if (shieldComponents.Length > 0) {
+            GeneratePlayerShield(collider);
         }
     }
 
-    void livesLost(float lives) {
-        for (int i = 0; i < lives; i++) {
-            Destroy(FindObjectOfType<PlayerLife>().gameObject);
+    void PlayZapAudio()
+    {
+        AudioSource.PlayClipAtPoint(zapAudio, Camera.main.transform.position);
+    }
+
+    void PlayDestroyedAudio()
+    {
+        AudioSource.PlayClipAtPoint(destroyedAudio, Camera.main.transform.position);
+    }
+
+    void CreateExplosion()
+    {
+        GameObject explosion = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
+        Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.duration * 2);
+    }
+
+    void LoseLives(int livesLost)
+    {
+        if (livesLost > currentLives)
+        {
+            livesLost = currentLives;
+        }
+        currentLives -= livesLost;
+        for (int i = 0; i < livesLost; i++)
+        {
+            PlayerLife playerLife = FindObjectOfType<PlayerLife>();
+            if (playerLife)
+            {
+                Destroy(playerLife.gameObject);
+            }
+        }
+    }
+
+    void GeneratePlayerShield(Collider2D collider)
+    {
+        var playerPowerUpManager = FindObjectOfType<PlayerPowerUpManager>();
+        playerPowerUpManager.GenerateShield(collider.gameObject);
+        gameObject.layer = 12;
+    }
+
+    public int GetInitialLives()
+    {
+        return initialLives;
+    }
+
+    void DestroyThrusters()
+    {
+        if (rThrust)
+        {
+            Destroy(rThrust);
+        }
+
+        if (lThrust)
+        {
+            Destroy(lThrust);
         }
     }
 }

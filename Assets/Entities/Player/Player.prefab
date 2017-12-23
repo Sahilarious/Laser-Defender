@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2057ebb03308241a727b2747364584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zap: {fileID: 0}
-  destroyed: {fileID: 0}
+  zap: {fileID: 8300000, guid: baede00894e215446b43c0513d02ab6b, type: 3}
+  destroyed: {fileID: 8300000, guid: b3e828d5d6c19dc4b9700525a2ac9efd, type: 3}
   velocityModifier: 10
   playerSprites:
   - {fileID: 21300000, guid: 091534bb64a96284d88b966bc2fba4db, type: 3}
@@ -133,6 +133,7 @@ MonoBehaviour:
     type: 2}
   leftThruster: {fileID: 1297476391198350, guid: 83ed700eb8066bf41990ab92323a6bec,
     type: 2}
+  shield: {fileID: 1554620807050808, guid: 52cb2d27c85a7d5489446781a6f778d7, type: 2}
   initialLives: 2
 --- !u!212 &212295386756023666
 SpriteRenderer:
